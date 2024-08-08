@@ -1,47 +1,3 @@
-HaraPay
-
-HaraPay is a decentralized payment infrastructure built on Hedera Hashgraph, designed to bridge the gap between blockchain and traditional financial services in Africa. With HaraPay, users can conduct secure, transparent, and efficient transactions using USSD codes, accessible even without an internet connection.
-
-Key Features
-USSD-based Wallet Creation and Management
-Token Transactions (Transfer, Buy, Sell)
-Integration with Local Banks for Fiat Transactions
-Secure PIN-based Authentication
-SMS Confirmation for Transactions
-
-Future Innovations
-Crypto Debit Cards: Enable users to spend crypto directly from their HaraPay wallets.
-Virtual Debit Cards: Provide a virtual card for online transactions.
-
-Technical Execution
-Backend: Node.js and Firebase.
-Blockchain Integration: Hedera SDK.
-USSD and SMS Services: Africa’s Talking.
-Frontend: React Native for POS systems.
-
-Team
-Amaan: Frontend and EVM Contracts
-Fredrick: Project Management and UI/UX Development
-Kyler: Smart Contract Development and Security
-Darren: Finance, Economics, Basic Coding, QA
-Hakan: Solidity and Mobile App Development
-
- Roadmap
-Phase 1: MVP Development and Testing
-Phase 2: Launch in Pilot Markets
-Phase 3: Expand to Other African Countries
-Phase 4: Global Expansion
-
-Impact and Scalability
-HaraPay aims to revolutionize financial services in Africa, providing financial inclusion for millions of unbanked individuals and empowering local businesses, thereby contributing to economic growth.
-
-Contact
-For more information, please contact us at [info.harapay@gmail.com.].
-
-
-
-Here's the revised version with the updated sections:
-
 ---
 
 # What is HaraPay? 
@@ -54,15 +10,42 @@ HaraPay steps in as a solution to bridge the gap between blockchain and traditio
 
 ## What Makes HaraPay Unique?
 
-HaraPay leverages Hedera Hashgraph technology to provide an innovative USSD interface, allowing users to perform a variety of crypto transactions securely and efficiently. With HaraPay, managing your finances becomes as simple as dialing a short code on your mobile device.
+HaraPay is a game-changer, seamlessly integrating with existing protocols and tools to offer a straightforward and user-friendly interface for cryptocurrency and fiat transactions. Instead of navigating multiple platforms to perform a single transaction, HaraPay provides an all-in-one solution. With HaraPay, managing your finances becomes as simple as dialing a short code on your mobile device.
 
 ### Key Features:
 
-- **USSD Transactions:** Seamless financial transactions without the need for internet access.
-- **Blockchain Security:** Built on Hedera Hashgraph for fast, secure, and scalable transactions.
-- **Multi-Currency Handling:** Manage both cryptocurrency (Hbar) and fiat currencies with ease.
-- **Real-Time SMS Notifications:** Stay updated with instant SMS alerts for all transactions.
-- **Crypto-to-Bank Conversion:** Convert cryptocurrency to fiat and transfer directly to bank accounts.
+- **USSD-based Wallet Creation and Management** 
+- **Token Transactions (Transfer, Buy, Sell)** 
+- **Crypto-to-Bank Conversion** 
+- **Secure PIN-based Authentication** 
+- **SMS Confirmation for Transactions** 
 
----
+### Future Innovations
+Crypto Debit Cards: Enable users to spend crypto directly from their HaraPay wallets.
+Virtual Debit Cards: Provide a virtual card for online transactions.
+
+## Impact and Scalability
+HaraPay aims to revolutionize financial services in Africa, providing financial inclusion for millions of unbanked individuals and empowering local businesses, thereby contributing to economic growth.
+
+### Technical Execution
+Backend: Node.js and Firebase.
+Blockchain Integration: Hedera SDK.
+USSD and SMS Services: Africa’s Talking.
+Frontend: React Native for POS systems.
+
+### Team
+Amaan: Frontend and EVM Contracts
+Fredrick: Project Management and UI/UX Development
+Kyler: Smart Contract Development and Security
+Darren: Finance, Economics, Basic Coding, QA
+Hakan: Solidity and Mobile App Development
+
+### Roadmap
+Phase 1: MVP Development and Testing
+Phase 2: Launch in Pilot Markets
+Phase 3: Expand to Other African Countries
+Phase 4: Global Expansion
+
+### Contact
+For more information, please contact us at [info.harapay@gmail.com.].
 
