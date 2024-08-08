@@ -33,14 +33,14 @@ Blockchain Integration: Hedera SDK.
 USSD and SMS Services: Africa’s Talking.
 Frontend: React Native for POS systems.
 
-### Team
-Amaan: Frontend and EVM Contracts
+### Team:
+Amaan:Frontend and EVM Contracts
 Fredrick: Project Management and UI/UX Development
 Kyler: Smart Contract Development and Security
 Darren: Finance, Economics, Basic Coding, QA
 Hakan: Solidity and Mobile App Development
 
-### Roadmap
+### Roadmap:
 Phase 1: MVP Development and Testing
 Phase 2: Launch in Pilot Markets
 Phase 3: Expand to Other African Countries
