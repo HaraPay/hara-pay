@@ -36,4 +36,33 @@ Impact and Scalability
 HaraPay aims to revolutionize financial services in Africa, providing financial inclusion for millions of unbanked individuals and empowering local businesses, thereby contributing to economic growth.
 
 Contact
-For more information, please contact us at [hakanttek@gmail.com].
+For more information, please contact us at [info.harapay@gmail.com.].
+
+
+
+Here's the revised version with the updated sections:
+
+---
+
+# What is HaraPay? 
+
+HaraPay is your bridge between traditional financial services and blockchain technology, tailored specifically for Africa. Conducting crypto transactions in regions with limited internet access can be challenging, and HaraPay addresses this by enabling seamless and secure transactions via USSD, eliminating the dependency on internet connectivity.
+
+## Why HaraPay?
+
+HaraPay steps in as a solution to bridge the gap between blockchain and traditional financial systems. It empowers users to interact with cryptocurrencies and fiat seamlessly, even in areas with limited internet access. HaraPay integrates with existing financial tools, allowing users to conduct financial transactions, including buying crypto, transferring funds, and making deposits, all from a basic mobile phone.
+
+## What Makes HaraPay Unique?
+
+HaraPay leverages Hedera Hashgraph technology to provide an innovative USSD interface, allowing users to perform a variety of crypto transactions securely and efficiently. With HaraPay, managing your finances becomes as simple as dialing a short code on your mobile device.
+
+### Key Features:
+
+- **USSD Transactions:** Seamless financial transactions without the need for internet access.
+- **Blockchain Security:** Built on Hedera Hashgraph for fast, secure, and scalable transactions.
+- **Multi-Currency Handling:** Manage both cryptocurrency (Hbar) and fiat currencies with ease.
+- **Real-Time SMS Notifications:** Stay updated with instant SMS alerts for all transactions.
+- **Crypto-to-Bank Conversion:** Convert cryptocurrency to fiat and transfer directly to bank accounts.
+
+---
+
