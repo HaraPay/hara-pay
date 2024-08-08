@@ -27,25 +27,32 @@ Virtual Debit Cards: Provide a virtual card for online transactions.
 ## Impact and Scalability
 HaraPay aims to revolutionize financial services in Africa, providing financial inclusion for millions of unbanked individuals and empowering local businesses, thereby contributing to economic growth.
 
-### Technical Execution
-Backend: Node.js and Firebase.
-Blockchain Integration: Hedera SDK.
-USSD and SMS Services: Africa’s Talking.
-Frontend: React Native for POS systems.
+Here's the updated README content with the new sections added:
 
-### Team:
-Amaan:Frontend and EVM Contracts
-Fredrick: Project Management and UI/UX Development
-Kyler: Smart Contract Development and Security
-Darren: Finance, Economics, Basic Coding, QA
-Hakan: Solidity and Mobile App Development
 
-### Roadmap:
-Phase 1: MVP Development and Testing
-Phase 2: Launch in Pilot Markets
-Phase 3: Expand to Other African Countries
-Phase 4: Global Expansion
+## Technical Execution
 
-### Contact
+- **Backend:** Node.js and Firebase.
+- **Blockchain Integration:** Hedera SDK.
+- **USSD and SMS Services:** Africa’s Talking.
+- **Frontend:** React Native for POS systems.
+
+## Team
+
+- **Amaan:** Frontend and EVM Contracts
+- **Fredrick:** Project Management and UI/UX Development
+- **Kyler:** Smart Contract Development and Security
+- **Darren:** Finance, Economics, Basic Coding, QA
+- **Hakan:** Solidity and Mobile App Development
+
+## Roadmap
+
+- **Phase 1:** MVP Development and Testing
+- **Phase 2:** Launch in Pilot Markets
+- **Phase 3:** Expand to Other African Countries
+- **Phase 4:** Global Expansion
+
+---
+### Contact:
 For more information, please contact us at [info.harapay@gmail.com.].
 
