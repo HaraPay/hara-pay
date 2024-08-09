@@ -51,5 +51,5 @@ HaraPay aims to revolutionize financial services in Africa and Beyond, providing
 
 ---
 ### Contact:
-For more information, please contact us at [info.harapay@gmail.com].
+For more information, please contact us at info.harapay@gmail.com
 
