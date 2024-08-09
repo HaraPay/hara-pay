@@ -27,9 +27,6 @@ Virtual Debit Cards: Provide a virtual card for online transactions.
 ## Impact and Scalability
 HaraPay aims to revolutionize financial services in Africa and Beyond, providing financial inclusion for millions of unbanked individuals and empowering local businesses, thereby contributing to economic growth.
 
-Here's the updated README content with the new sections added:
-
-
 ## Technical Execution
 
 - **Backend:** Node.js and Firebase.
