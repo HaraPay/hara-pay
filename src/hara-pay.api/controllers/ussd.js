@@ -1,7 +1,11 @@
-const register = async (req, res) => {
+const { ussdRouter } = require('ussd-router');
+const ussdCallback = async (req, res) => {
     res.set('Content-Type: text/plain');
 
-    const { body: { phoneNumber: phoneNumber } } = req;
+    if (!req.body.phoneNumber) res.send("END service is failed")
+
+    const { body: { phoneNumber, sessionId, serviceCode, } } = req;
+
     const { body: { text: rawText } } = req; 
     const text = ussdRouter(rawText);
     const footer = '\n0: Home 00: Back';
@@ -16,7 +20,7 @@ const register = async (req, res) => {
     if(userExists === false){       
       let userCreated = await createNewUser(senderId, senderMSISDN);     
       console.log('Created user with userID: ', userCreated); 
-      // msg += `END Creating your account on KotaniPay`;    
+      // msg += `END Creating your account on HaraPay`;    
     }
   
     let isverified = await checkIfUserisVerified(senderId);    
@@ -114,6 +118,7 @@ const register = async (req, res) => {
     }
   
   res.send("something gone wrong");
+
 }
 
 const verifyToken = (req, res, next) => {
@@ -261,7 +266,7 @@ async function processApiWithdraw(withdrawMSISDN, amount, txhash){
     let message = {
       "status": `success`,
       "recipientName": displayName,
-      "message": `Withdraw via Kotanipay successful`,
+      "message": `Withdraw via Harapay successful`,
       "recipient": `${withdrawMSISDN}`,
       "amount": `${amount} KES`,
       "referenceCode" : `${referenceCode}`
@@ -587,7 +592,7 @@ async function verifyNewUser(userId, email, newUserPin, password, firstname, las
       .then(userRecord => {
         admin.auth().setCustomUserClaims(userRecord.uid, {verifieduser: true})
         //Inform user that account is now verified
-        let message2sender = `Welcome to Kotanipay.\nYour account details have been verified.\nDial *483*354# to access the KotaniPay Ecosytem.\nUser PIN: ${newUserPin}`;
+        let message2sender = `Welcome to Harapay.\nYour account details have been verified.\nDial *483*354# to access the HaraPay Ecosytem.\nUser PIN: ${newUserPin}`;
         sendMessage("+"+userMSISDN, message2sender);
         resolve (userRecord.uid);
       })
@@ -598,4 +603,4 @@ async function verifyNewUser(userId, email, newUserPin, password, firstname, las
 }
 
 
-module.exports = { register }
+module.exports = { ussdCallback }

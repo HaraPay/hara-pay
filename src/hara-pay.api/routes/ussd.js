@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var { register } = require('../controllers/auth.js')
+var { ussdCallback } = require('../controllers/ussd.js')
 
 // USSD authentication
-router.post('/', register);
+router.post('/', ussdCallback);
 
 module.exports = router;
