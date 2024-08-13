@@ -17,6 +17,8 @@
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
     "randomstring": "^1.3.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "tinyurl": "^1.1.7",
     "ussd-router": "^0.1.6"
   },
