@@ -1,10 +1,13 @@
-// tokenService.js
-
-const { Client, TokenCreateTransaction, TransferTransaction, TokenType } = require("@hashgraph/sdk");
+const { Client, TokenCreateTransaction, TransferTransaction, TokenType, PrivateKey } = require("@hashgraph/sdk");
 
 class TokenService {
   constructor(accountId, privateKey) {
-    this.client = Client.forTestnet().setOperator(accountId, privateKey);
+    // Create a PrivateKey object from the string
+    this.operatorPrivateKey = PrivateKey.fromString(privateKey);
+
+    // Set the Client operator
+    this.client = Client.forTestnet()
+      .setOperator(accountId, this.operatorPrivateKey);
   }
 
   async createToken(name, symbol, decimals, initialSupply, treasuryAccountId) {
@@ -17,7 +20,7 @@ class TokenService {
       .setTokenType(TokenType.FungibleCommon)
       .freezeWith(this.client);
 
-    const signTx = await transaction.sign(this.client.operatorPrivateKey);
+    const signTx = await transaction.sign(this.operatorPrivateKey);
     const submitTx = await signTx.execute(this.client);
     const receipt = await submitTx.getReceipt(this.client);
     return receipt.tokenId;
@@ -29,7 +32,7 @@ class TokenService {
       .addTokenTransfer(tokenId, toAccountId, amount)
       .freezeWith(this.client);
 
-    const signTx = await transaction.sign(this.client.operatorPrivateKey);
+    const signTx = await transaction.sign(this.operatorPrivateKey);
     const submitTx = await signTx.execute(this.client);
     const receipt = await submitTx.getReceipt(this.client);
     return receipt.status;

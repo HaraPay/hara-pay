@@ -11,9 +11,9 @@ class TokenController {
   }
 
   async createToken(req, res) {
-    const { name, symbol, decimals, initialSupply } = req.body;
+    const { name, symbol, decimals, initialSupply, treasuryAccountId } = req.body;
     try {
-      const tokenId = await this.tokenService.createToken(name, symbol, decimals, initialSupply, req.user.accountId);
+      const tokenId = await this.tokenService.createToken(name, symbol, decimals, initialSupply, treasuryAccountId);
       res.json({ tokenId: tokenId.toString() });
     } catch (error) {
       res.status(500).json({ error: error.message });

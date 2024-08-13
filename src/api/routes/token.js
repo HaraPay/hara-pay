@@ -43,6 +43,9 @@ const tokenController = new TokenController(tokenService);
  *                 type: integer
  *                 description: The initial supply of the token
  *                 example: 1000000
+  *               treasuryAccountId:
+ *                 type: string
+ *                 description: Treasury Account Id of token
  *     responses:
  *       200:
  *         description: Successfully created token
