@@ -58,7 +58,7 @@ const tokenController = new TokenController(tokenService);
  *       500:
  *         description: Server error
  */
-router.post('/token/create', tokenController.createToken);
+router.post('/create', tokenController.createToken);
 
 /**
  * @swagger
@@ -104,6 +104,6 @@ router.post('/token/create', tokenController.createToken);
  *       500:
  *         description: Server error
  */
-router.post('/token/transfer', tokenController.transferToken);
+router.post('/transfer', tokenController.transferToken);
 
 module.exports = router;
