@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var ussdRouter = require('./routes/ussd');
+const tokenRouter = require('./routes/token')
 
 const { specs, swaggerUi } = require('./swagger');
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/ussd', ussdRouter);
+app.use('/token', tokenRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,7 +45,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-app.listen(8080);
 
 module.exports = app;
