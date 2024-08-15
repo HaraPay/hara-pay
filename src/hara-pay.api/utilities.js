@@ -8,13 +8,13 @@ const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance()
 const randomstring = require('randomstring')
 
 // AFRICASTALKING API
-const AT_credentials = {
-  apiKey: functions.config().env.at_api.key,
-  username: functions.config().env.at_api.usename
-}
+// const AT_credentials = {
+//   apiKey: functions.config().env.at_api.key,
+//   username: functions.config().env.at_api.usename
+// }
 
-const AfricasTalking = require('africastalking')(AT_credentials);
-const sms = AfricasTalking.SMS;
+// const AfricasTalking = require('africastalking')(AT_credentials);
+// const sms = AfricasTalking.SMS;
 
 
 //SEND GET shortURL
@@ -57,7 +57,8 @@ function getUserAddressUrl(userAddress){
 
 function getEncryptKey(userMSISDN){    
   const crypto = require('crypto');
-  const hash_fn = functions.config().env.algo.key_hash;
+ // const hash_fn = functions.config().env.algo.key_hash;
+  const hash_fn = "sha512";
   let key = crypto.createHash(hash_fn).update(userMSISDN).digest('hex');
   return key;
 }
@@ -85,7 +86,7 @@ function sendMessage(to, message) {
     const params = {
         to: [to],
         message: message,
-        from: 'KotaniPay'
+        from: 'HaraPay'
     }  
     // console.log('Sending sms to user')
     sms.send(params)

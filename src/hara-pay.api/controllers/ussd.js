@@ -1,4 +1,185 @@
-const { ussdRouter } = require('ussd-router');
+'use strict';
+
+// Firebase init
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const serviceAccount = require('../config/serviceAccountKey.json');
+
+admin.initializeApp({
+credential: admin.credential.cert(serviceAccount),
+// databaseURL: functions.config().env.firebase.db_url,
+});
+
+const firestore = admin.firestore();
+const crypto = require('crypto');
+const bip39 = require('bip39-light');
+
+// Express and CORS middleware init
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const moment = require('moment');
+const { ussdRouter } = require ('ussd-router');
+
+// const app = express().use(cors({ origin: true }), bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+// const jengaApi = express().use(cors({ origin: true }), bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+// const ussdcalls = express().use(cors({ origin: true }), bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+// var restapi = express().use(cors({ origin: true }), bodyParser.json(), bodyParser.urlencoded({ extended: true }), bearerToken());
+
+
+// Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
+// The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
+// `Authorization: Bearer <Firebase ID Token>`.
+// when decoded successfully, the ID Token content will be added as `req.user`.
+const validateFirebaseIdToken = async (req, res, next) => {
+  console.log('Check if request is authorized with Firebase ID token');
+
+  if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
+      !(req.cookies && req.cookies.__session)) {
+    console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
+        'Make sure you authorize your request by providing the following HTTP header:',
+        'Authorization: Bearer <Firebase ID Token>',
+        'or by passing a "__session" cookie.');
+    res.status(403).send('Unauthorized');
+    return;
+  }
+
+  let idToken;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    console.log('Found "Authorization" header');
+    // Read the ID Token from the Authorization header.
+    idToken = req.headers.authorization.split('Bearer ')[1];
+  } else if(req.cookies) {
+    console.log('Found "__session" cookie');
+    // Read the ID Token from cookie.
+    idToken = req.cookies.__session;
+  } else {
+    // No cookie
+    res.status(403).send('Unauthorized');
+    return;
+  }
+
+  try {
+    const decodedIdToken = await admin.auth().verifyIdToken(idToken);
+    console.log('ID Token correctly decoded', decodedIdToken);
+    req.user = decodedIdToken;
+    next();
+    return;
+  } catch (error) {
+    console.error('Error while verifying Firebase ID token:', error);
+    res.status(403).send('Unauthorized');
+    return;
+  }
+};
+
+// Initialize the firebase auth
+// const firebaseAuth = createFirebaseAuth({ ignoredUrls: ['/ignore'], serviceAccount, admin });
+
+const getAuthToken = (req, res, next) => {
+  if ( req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer' ) {
+    req.authToken = req.headers.authorization.split(' ')[1];
+    console.log("Auth Token",req.headers.authorization);
+  } else {
+    // req.authToken = null;
+    return res.status(201).json({
+      message: 'Not Allowed'
+    });
+  }
+  next();
+};
+
+const requireAuth = (req, res, next) => {
+  if(!req.token){
+    res.send('401 - Not authenticated!');
+    return;
+  }
+  next();
+}
+
+const PNF = require('google-libphonenumber').PhoneNumberFormat;
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+const axios = require("axios");
+// const jenga = require('./jengakit');
+
+// var randomstring = require("randomstring");
+var { getTxidUrl,
+      getDeepLinkUrl,
+      getAddressUrl,
+      getPinFromUser,
+      getEncryptKey,
+      createcypher,
+      decryptcypher,      
+      sendMessage,
+      sendGmail,
+      arraytojson,
+      stringToObj,
+      parseMsisdn,
+      emailIsValid,
+      isDobValid,
+      isValidKePhoneNumber
+} = require('../utilities');
+
+//ENV VARIABLES
+// const iv = functions.config().env.crypto_iv.key;
+const iv = "functions.config().env.crypto_iv.key;"
+// const enc_decr_fn = functions.config().env.algo.enc_decr;
+// const  phone_hash_fn = functions.config().env.algo.msisdn_hash;
+const  phone_hash_fn = "sha512"
+
+// const escrowMSISDN = functions.config().env.escrow.msisdn;
+
+//@task imports from celokit
+
+const { transfercGOLD,
+        getPublicAddress,
+        generatePrivKey,
+        getPublicKey,
+        getAccAddress,
+        getTxAmountFromHash,
+        checksumAddress,
+        getTransactionBlock,
+        sendcGold,
+        weiToDecimal,
+        decimaltoWei,
+        sendcUSD,
+        buyCelo,
+        sellCelo,
+        getContractKit,
+        getLatestBlock,
+        validateWithdrawHash
+} = require('../celokit');
+
+// const { getIcxUsdtPrice } = require('./iconnect');
+const { resolve } = require('path');
+
+// const kit = getContractKit();
+
+// GLOBAL VARIABLES
+// let publicAddress = '';
+let senderMSISDN = '';
+let receiverMSISDN = '';
+var recipientId = '';
+var senderId = '';
+let amount = '';
+let withdrawId = '';
+let depositId = '';
+let escrowId = '';
+let newUserPin = '';
+let confirmUserPin = '';
+let documentType = '';
+let documentNumber = '';
+let idnumber = '';
+let firstname = '';
+let lastname = '';
+let dateofbirth = '';
+let email = '';
+let usdMarketRate = 108.5;
+let cusd2kesRate = 108.6 - (0.01*108.6);  //usdMarketRate - (0.01*usdMarketRate);
+let kes2UsdRate = 0.0092165;  //usdMarketRate + (0.02*usdMarketRate)=1/(108.6 + (0.02*108.6))usdMarketRate
+let cusdSellRate = 110;
+let cusdBuyRate = 107.5;
+   
 const ussdCallback = async (req, res) => {
     res.set('Content-Type: text/plain');
 
@@ -114,11 +295,8 @@ const ussdCallback = async (req, res) => {
         }
       }
     } else {
-      res.send("User isn't verified");
+      res.send("END Congrats! User is verified");
     }
-  
-  res.send("something gone wrong");
-
 }
 
 const verifyToken = (req, res, next) => {
@@ -186,7 +364,8 @@ const sendcusdApi = async(senderMSISDN, receiverMSISDN, cusdAmount) => {
         let _receiver = '';
 
         // TODO: Verify User has sufficient balance to send 
-        const cusdtoken = await kit.contracts.getStableToken();
+        // const cusdtoken = await kit.contracts.getStableToken();
+        const cusdtoken = ""
         let userbalance = await weiToDecimal(await cusdtoken.balanceOf(senderInfo.data().publicAddress)) // In cUSD
         let _userbalance = number_format(userbalance, 4)
         
@@ -261,7 +440,7 @@ async function processApiWithdraw(withdrawMSISDN, amount, txhash){
 
     // jenga.sendFromJengaToMobileMoney(data[1], 'KES', 'KE',`${fullname}`, withdrawMSISDN) 
     // let message2receiver = `You have Withdrawn KES ${number_format(amount,2)} to your Mpesa account.`;
-    sendMessage("+"+withdrawMSISDN, message2receiver);  
+    // sendMessage("+"+withdrawMSISDN, message2receiver);  
 
     let message = {
       "status": `success`,
@@ -578,7 +757,7 @@ function createNewUser(userId, userMSISDN){
   });  
 }
 
-async function verifyNewUser(userId, email, newUserPin, password, firstname, lastname, idnumber, dateofbirth, userMSISDN){
+async function verifyNewUser(userId, email, newUserPin, password, firstname, lastname, idnumber, dateofbirth, userMSISDN) {
   return new Promise(resolve => {
       admin.auth().updateUser(userId, { 
           email: `${email}`,
@@ -592,8 +771,8 @@ async function verifyNewUser(userId, email, newUserPin, password, firstname, las
       .then(userRecord => {
         admin.auth().setCustomUserClaims(userRecord.uid, {verifieduser: true})
         //Inform user that account is now verified
-        let message2sender = `Welcome to Harapay.\nYour account details have been verified.\nDial *483*354# to access the HaraPay Ecosytem.\nUser PIN: ${newUserPin}`;
-        sendMessage("+"+userMSISDN, message2sender);
+        // let message2sender = `Welcome to Harapay.\nYour account details have been verified.\nDial *384*99899# to access the HaraPay Ecosytem.\nUser PIN: ${newUserPin}`;
+        // sendMessage("+"+userMSISDN, message2sender);
         resolve (userRecord.uid);
       })
       .catch(function(error) {
